@@ -1,0 +1,173 @@
+/* ============================================================ */
+/*   Database SCHEMA:  sec                       */
+/*   DB name: Dados empresa - João Pedro Chagas                     */
+/* ============================================================ */
+
+
+BEGIN TRANSACTION;
+SET CONSTRAINTS ALL DEFERRED;
+SET SEARCH_PATH TO sec; 
+
+/* ============================================================ */
+/*   Inserindo Povoamento de Empresa                      */
+/*   idEmpresa, CNPJ, nomeEmpresa*/
+/* ============================================================ */
+
+INSERT INTO  empresa
+VALUES (123456780, 1234567890001, 'samsunginc');
+
+INSERT INTO  empresa
+VALUES (123456781, 1334567890001, 'samsunginc');
+
+INSERT INTO  empresa
+VALUES (123456782, 1434567890001, 'xiaomiinc');
+
+INSERT INTO  empresa
+VALUES (123456783, 1534567890001, 'hauweiinc');
+
+INSERT INTO  empresa
+VALUES (123456784, 1634567890001, 'motorolainc');
+
+/* ============================================================ */
+/*   Inserindo Povoamento de Patrocinadora                   */
+/*   idEmpresa, valorPatrocinio, estadoLiberacao('P','L')  */
+/* ============================================================ */
+
+INSERT INTO  patrocinadora
+	VALUES (123456780, 24500, 'L' ,DATE '2021-05-22');
+
+INSERT INTO  patrocinadora
+	VALUES (123456781, 24500, 'P' ,DATE '2021-02-07');
+
+INSERT INTO  patrocinadora
+	VALUES (123456782, 70000, 'L' ,DATE '2021-01-14');
+
+INSERT INTO  patrocinadora
+	VALUES (123456783, 60300, 'P' ,DATE '2021-02-24');
+
+INSERT INTO  patrocinadora
+	VALUES (123456784, 50350, 'L' ,DATE '2021-04-07');
+
+/* ============================================================ */
+/*   Inserindo Povoamento de organizadora                */
+/*   idEmpresa */
+/* ============================================================ */
+
+INSERT INTO  organizadora
+	VALUES (123456780);
+
+
+INSERT INTO  organizadora
+	VALUES (123456781);
+
+
+INSERT INTO  organizadora
+	VALUES (123456782);
+
+
+INSERT INTO  organizadora
+	VALUES (123456783);
+
+
+INSERT INTO  organizadora
+	VALUES (123456784);
+
+/* ============================================================ */
+/*   Inserindo Povoamento de Pessoa               */
+/*idPessoa int not null, CPF char(14), nomePessoa char(20), dataPagamento, tipoPessoa char (2)("ES,PR,EP"), idEmpresa int, idResponsavel int not null   */
+/* ============================================================ */
+
+
+INSERT INTO pessoa
+	VALUES (20,'123.456.789-00','Joao',DATE '2021-12-08','ES',123456780,10); 
+
+
+INSERT INTO pessoa
+	VALUES (21,'123.456.789-11','Victor',DATE '2021-10-08','PR',123456781,11); 
+
+
+INSERT INTO pessoa
+	VALUES (22,'123.456.789-22','Pereira',DATE '2021-09-07','EP',123456782,12); 
+
+INSERT INTO pessoa
+	VALUES (23,'123.456.789-33','Ilmerio',DATE '2021-09-27','ES',123456782,14);
+
+INSERT INTO pessoa
+	VALUES (24,'123.456.789-33','Rodnei',DATE '2021-01-14','ES',123456784,15);
+
+
+/* ============================================================ */
+/*   Inserindo Povoamento de promotora               */
+/*    idEmpresa int not null     */
+/* ============================================================ */
+INSERT INTO promotora VALUES(123456780);
+INSERT INTO promotora VALUES(123456781);
+INSERT INTO promotora VALUES(123456782);
+INSERT INTO promotora VALUES(123456783);
+INSERT INTO promotora VALUES(123456784);
+
+
+
+/* ============================================================ */
+/*   Inserindo Povoamento de responsavel               */
+/*    idResponsavel int not null     */
+/* ============================================================ */
+
+INSERT INTO responsavel VALUES (10);
+INSERT INTO responsavel VALUES (11);
+INSERT INTO responsavel VALUES (12);
+INSERT INTO responsavel VALUES (13);
+INSERT INTO responsavel VALUES (14);
+INSERT INTO responsavel VALUES (15);
+
+
+/* ============================================================ */
+/*   Inserindo Povoamento de servico             */
+/*   idServico int not null, descricaoServico, custoServico, estadoServico('P','C','E','G'), dataTerminoServico, idResponsavel not null     */
+/* ============================================================ */
+
+INSERT INTO servico VALUES (70, 'descricao servico1', 50.0, 'P', '2021-11-11', 10);
+INSERT INTO servico VALUES (71, 'descricao servico2', 60.0, 'C', '2021-11-11', 11);
+INSERT INTO servico VALUES (72, 'descricao servico3', 70.0, 'E', '2021-11-11', 12);
+INSERT INTO servico VALUES (73, 'descricao servico4', 80.0, 'G', '2021-11-11', 13);
+INSERT INTO servico VALUES (74, 'descricao servico5', 90.0, 'C', '2021-11-11', 14);
+
+
+/* ============================================================ */
+/*   Inserindo Povoamento de prestadora             */
+/*   idEmpresa int not null, idResponsavel not null     */
+/* ============================================================ */
+
+INSERT INTO prestadora VALUES (123456780, 10);
+INSERT INTO prestadora VALUES (123456781, 11);
+INSERT INTO prestadora VALUES (123456782, 12);
+INSERT INTO prestadora VALUES (123456783, 13);
+INSERT INTO prestadora VALUES (123456784, 14);
+
+
+/* ============================================================ */
+/*   Inserindo Povoamento de tarefa             */
+/*   idTarefa int not null, descricaoTarefa char(50) not null, idPessoa int not null, idSuperTarefa int not null  */
+/* ============================================================ */
+
+INSERT INTO tarefa VALUES (30, 'Tarefa top1', 20, 40);
+INSERT INTO tarefa VALUES (31, 'Tarefa top2', 21, 41);
+INSERT INTO tarefa VALUES (32, 'Tarefa top3', 22, 42);
+INSERT INTO tarefa VALUES (33, 'Tarefa top4', 23, 43);
+INSERT INTO tarefa VALUES (34, 'Tarefa top5', 24, 44);
+
+/* ============================================================ */
+/*   Inserindo Povoamento de inscricao             */
+/*   idPessoa int not null, idTarefa int not null*/
+/* ============================================================ */
+
+INSERT INTO inscricao VALUES(20, 30);
+INSERT INTO inscricao VALUES(21, 31);
+INSERT INTO inscricao VALUES(22, 32);
+INSERT INTO inscricao VALUES(23, 33);
+INSERT INTO inscricao VALUES(24, 34);
+
+
+--chaguinhas organizo fml, bjs
+
+END TRANSACTION;
