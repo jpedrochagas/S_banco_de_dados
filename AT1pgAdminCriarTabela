@@ -1,0 +1,84 @@
+CREATE SCHEMA sec;
+SET search_path TO sec;
+
+CREATE TABLE empresa (
+	idEmpresa int not null,
+	cnpj char(15) not null,
+	nomeEmpresa varchar(30),
+	UNIQUE (idEmpresa),
+	primary key (idEmpresa, cnpj)
+);
+
+CREATE TABLE patrocinadora (
+	idEmpresa int not null PRIMARY KEY,
+	CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa),
+	valorPatrocinio float(10) not null,
+	estadoLiberacao char CHECK (estadoLiberacao IN('P','L')),
+	dataLiberacao date not null);
+	
+	
+CREATE TABLE organizadora (
+	idEmpresa int not null PRIMARY KEY,
+	CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa)
+);
+
+CREATE TABLE promotora (
+	idEmpresa int not null PRIMARY KEY,
+	CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa)
+);
+
+CREATE TABLE responsavel (
+	idResponsavel int not null PRIMARY KEY,
+	UNIQUE (idResponsavel)
+);
+
+CREATE TABLE servico(
+    idServico int NOT NULL ,
+    descricaoServico char (100),
+    custoServico float,
+    estadoServico char CHECK (estadoServico IN ('P','C','E','G')),
+    dataTerminoServico date,
+    idResponsavel int NOT NULL,
+    primary key (idServico),
+    CONSTRAINT fk_idResponsavel FOREIGN KEY (idResponsavel)
+    REFERENCES responsavel(idResponsavel)
+);
+
+CREATE TABLE prestadora (
+	idEmpresa int not null,
+	idResponsavel int not null,
+	primary key (idEmpresa, idResponsavel),
+	CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa),
+	CONSTRAINT fk_idResponsavel FOREIGN KEY (idResponsavel) REFERENCES responsavel(idResponsavel)
+);
+
+CREATE TABLE pessoa (
+    idPessoa int not null,
+    cpf char(14) not null,
+    nomePessoa char(20) not null,
+    dataPagamentoIncricao date not null,
+    tipoPessoa char(2) CHECK (tipoPessoa IN ('ES', 'PR', 'EP')),
+    idEmpresa int,
+    idResponsavel int not null,
+	UNIQUE (idPessoa),
+    primary key (idPessoa, cpf, idResponsavel),
+    CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa),
+	CONSTRAINT fk_idResponsavel FOREIGN KEY (idResponsavel) REFERENCES responsavel(idResponsavel));
+
+CREATE TABLE tarefa  (
+    idTarefa int not null,
+    descricaoTarefa char(50) not null,
+    idPessoa int not null,
+    idSuperTarefa int not null,
+	UNIQUE (idTarefa),
+    primary key  (idTarefa),
+    CONSTRAINT fk_tarefaOrd FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa)
+);
+
+CREATE TABLE inscricao (
+	idPessoa int not null,
+	idTarefa int not null,
+	primary key (idPessoa, idTarefa),
+	CONSTRAINT fk_idPessoa FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa),
+	CONSTRAINT fk_idTarefa FOREIGN KEY (idTarefa) REFERENCES tarefa(idTarefa)
+);
