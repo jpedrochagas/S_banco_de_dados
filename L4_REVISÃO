@@ -25,3 +25,34 @@ com base na coluna em que cada valor está.
   Uma chave estrangeira (FK) se refere a uma PK ou a uma chave única em outra tabela ou na mesma tabela. Podemos dizer também que a (FK ou chave estrangeira) vincula
 tabelas entre si, a chave estrangeira possibilita a implementação da integridade de dados diretamente no banco de dados.
 Por exemplo na tabela PEDIDOS podemos ter uma chave estrangeira efetuando o relacionamento com a chave primária na tabela de clientes.
+
+- IV. 5.1
+  Metadados são informações que são adicionadas aos dados com a intenção de informar-nos sobre eles para melhor organização do mesmo. 
+ De maneira geral eles tem a função de promover a compreensão das relações e destacar a utilidade das informações dos dados. Podemos dizer que os metadados são
+ "dados sobre dados" através deles conseguimos efetuar a representação e identificação dos dados
+ 
+Exemplo criando metadados:
+
+CREATE TABLE patrocinadora (
+	idEmpresa int not null PRIMARY KEY,
+	CONSTRAINT fk_idEmpresa FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa),
+	valorPatrocinio float(10) not null,
+	estadoLiberacao char CHECK (estadoLiberacao IN('P','L')),
+	dataLiberacao date not null);
+  
+Exemplo de comando que cria dados: 
+  INSERT INTO  patrocinadora
+	VALUES (123456780, 24500, 'L' ,DATE '2021-05-22');
+  
+ - IV. 5.2
+  As chaves primárias sao criadas das seguintes formas:
+    NomedaChave TipodaChave PRIMARY KEY;
+    Exemplo: idEmpresa int not null PRIMARY KEY;
+
+ As chaves alternativas nos criamos da seguinte forma:
+    TipodoValor CONSTRAINT NomedoValor_sk UNIQUE;
+    Exemplo: nomepessoa varchar(15) CONSTRAINT nomepessoa_sk UNIQUE;
+
+
+
+
