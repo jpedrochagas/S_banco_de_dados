@@ -30,7 +30,7 @@ CREATE TABLE pre_requisito(
 	iddis int not null,
 	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis), 
 	idpre int not null,
-	CONSTRAINT idpre PRIMARY KEY (iddis, idpre),
+	CONSTRAINT idpre PRIMARY KEY (idpre),
 	UNIQUE (idpre)
 );
 
