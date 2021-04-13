@@ -23,20 +23,22 @@ CREATE TABLE aluno(
 
 CREATE TABLE disciplina(
 	iddis int not null CONSTRAINT iddis primary key,
-	nomedis char(30) not null
+	nomedis char(30) not null,
+	UNIQUE(iddis)
 );
 
 CREATE TABLE pre_requisito(
 	iddis int not null,
 	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis), 
 	idpre int not null,
-	CONSTRAINT idpre PRIMARY KEY (idpre),
+	CONSTRAINT idpre PRIMARY KEY (idpre), -corrigir idds e idpre como uma chave primaria composta
 	UNIQUE (idpre)
 );
 
 CREATE TABLE professor(
 	idprof int not null CONSTRAINT idprof primary key,
 	nomepro char(30) not null
+	- adicionar o UNIQUE AO IDPROF.
 );
 
 CREATE TABLE turma(
@@ -52,9 +54,9 @@ CREATE TABLE turma(
 
 CREATE TABLE turpro(
 	idtur int not null,
-	idprof int not null,
+	idprof int not null, - CHAVE ESTRANGEIRA NO IDPROF
 	CONSTRAINT fk_idtur FOREIGN KEY (idtur) REFERENCES turma(idtur),
-	PRIMARY KEY(idprof)
+	PRIMARY KEY(idprof) - IDTUR JUNTO POR SER CHAVE COMPSTA
 );
 
 CREATE TABLE historico(
@@ -63,4 +65,5 @@ CREATE TABLE historico(
 	nota int,
 	CONSTRAINT fk_idalu FOREIGN KEY (idalu) REFERENCES aluno(idalu),
 	CONSTRAINT fk_idtur FOREIGN KEY (idtur) REFERENCES turma(idtur)
+	ADICIONAR PRIMARY KEY COMPOSTA EM IDALU E IDUR
 );
