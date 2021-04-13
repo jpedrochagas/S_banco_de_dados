@@ -1,0 +1,27 @@
+- IV.4.1) Compare os conceitos de Entidade, Relação e Tabela.
+  
+  A relação representa uma entidade, porém de uma forma diferente, a relação traz a ideia do conjunto de registros que é o cerne do que a entidade representa.
+Cada registro representa uma instância da entidade. O foco da relação é nas instâncias da entidade, não só na entidade como um modelo geral.
+E o conjunto de todas as instâncias, que é uma ocorrência específica dentro de uma entidade, o conjunto de todas elas com seus atributos é chamado de relação.
+  A relação é uma tabela bidimensional, que tem características específicas, a tabela possui linhas e colunas e é derivada de uma entidade.
+Toda relação é uma tabela, mas nem toda tabela é uma relação.
+  Quando modela-se um banco de dados a entidade serve para chegarmos em uma relação, que dará origem as tabelas que serão criadas no banco de dados.
+
+
+- IV. 4.2)
+  As instâncias de uma entidade correspondem aos registros, por exemplo a entidade NOTEBOOK tem como suas instâncias todos os seus dados: fabricante, modelo, etc...
+Uma linha dentro de uma relação representa uma instância de uma entidade.
+  Cada linha em uma tabela de banco de dados ou em uma relação, representa uma entidade e contem dados sobre as instâncias da entidade. 
+
+
+- IV.4.3)
+  Um atributo corresponde a alguma propriedade de interesse que ajuda a descrever uma entidade. No modelo ER, o atributo é representado por uma elipse. No modelo R, é 
+representado por meio de um esquema de relaçao onde o R é a relação de Ai é o nome de um atributo:R(A1,A2,A3,...,An). Colunas na tabela contém dados sobre atributos 
+da entidade. Representam informações sobre a entidade as qualidades da entidade. Estes atributos nas colunas, especificam como interpretar os valores de dados em cada linha,
+com base na coluna em que cada valor está. 
+
+
+- IV. 4.4)
+  Uma chave estrangeira (FK) se refere a uma PK ou a uma chave única em outra tabela ou na mesma tabela. Podemos dizer também que a (FK ou chave estrangeira) vincula
+tabelas entre si, a chave estrangeira possibilita a implementação da integridade de dados diretamente no banco de dados.
+Por exemplo na tabela PEDIDOS podemos ter uma chave estrangeira efetuando o relacionamento com a chave primária na tabela de clientes.
