@@ -1,5 +1,4 @@
-- IV.4.1) Compare os conceitos de Entidade, Relação e Tabela.
-  
+- IV.4.1) 
   A relação representa uma entidade, porém de uma forma diferente, a relação traz a ideia do conjunto de registros que é o cerne do que a entidade representa.
 Cada registro representa uma instância da entidade. O foco da relação é nas instâncias da entidade, não só na entidade como um modelo geral.
 E o conjunto de todas as instâncias, que é uma ocorrência específica dentro de uma entidade, o conjunto de todas elas com seus atributos é chamado de relação.
