@@ -3,67 +3,64 @@
 /*   Criando tabela para banco de dados academico                     */
 /* ============================================================ */
 
-
 CREATE SCHEMA BD_ACADEMICO;
 SET search_path TO BD_ACADEMICO;
 
 CREATE TABLE curso(
-	idcur int not null CONSTRAINT idcur_pk primary key,
-	nomecur char(25) not null CONSTRAINT nomecur_pk UNIQUE
+	idcur varchar(4) not null CONSTRAINT pk_idcur PRIMARY KEY,
+	nomecur varchar(50) not null CONSTRAINT pk_nomecur UNIQUE	
 );
 
 CREATE TABLE aluno(
-	idalu int not null,
-	nomealu char(30) not null,
-	tipoalu char(25) not null,
-	idcurso int not null,
-	UNIQUE (idalu),
-	primary key (idalu)
+	idalu int not null PRIMARY KEY,
+	UNIQUE(idalu),
+	nomealu varchar(20) not null,
+	tipoalu varchar(15) not null,
+	idcurso int not null
 );
 
 CREATE TABLE disciplina(
-	iddis int not null CONSTRAINT iddis primary key,
-	nomedis char(30) not null,
-	UNIQUE(iddis)
+	iddis varchar(30) not null PRIMARY KEY,
+	UNIQUE(iddis),
+	nomedis varchar(30) not null
 );
 
 CREATE TABLE pre_requisito(
-	iddis int not null,
-	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis), 
+	iddis varchar(7) not null,
+	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis),
 	idpre int not null,
-	CONSTRAINT idpre PRIMARY KEY (idpre), -corrigir idds e idpre como uma chave primaria composta
-	UNIQUE (idpre)
+	PRIMARY KEY(iddis,idpre)
 );
 
 CREATE TABLE professor(
-	idprof int not null CONSTRAINT idprof primary key,
-	nomepro char(30) not null
-	- adicionar o UNIQUE AO IDPROF.
+	idprof int not null PRIMARY KEY,
+	UNIQUE(idprof),
+	nomepro varchar(30) not null
 );
 
 CREATE TABLE turma(
-	idtur int not null,
-	iddis int not null,
+	idtur int not null PRIMARY KEY,
+	UNIQUE(idtur),
+	iddis varchar(7) not null,
+	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis),
 	ano int not null,
 	semestre int not null,
-	codtur int not null,
-	CONSTRAINT fk_iddis FOREIGN KEY (iddis) REFERENCES disciplina(iddis),
-	PRIMARY KEY(idtur, ano, semestre, codtur),
-	UNIQUE(idtur)
+	codtur varchar(8) not null,
+	UNIQUE(iddis,ano,semestre,codtur)
 );
 
 CREATE TABLE turpro(
 	idtur int not null,
-	idprof int not null, - CHAVE ESTRANGEIRA NO IDPROF
 	CONSTRAINT fk_idtur FOREIGN KEY (idtur) REFERENCES turma(idtur),
-	PRIMARY KEY(idprof) - IDTUR JUNTO POR SER CHAVE COMPSTA
+	idprof int not null,
+	CONSTRAINT fk_idprof FOREIGN KEY (idprof) REFERENCES professor(idprof),
+	PRIMARY KEY(idtur,idprof)
 );
 
 CREATE TABLE historico(
 	idalu int not null,
-	idtur int not null,
-	nota int,
 	CONSTRAINT fk_idalu FOREIGN KEY (idalu) REFERENCES aluno(idalu),
-	CONSTRAINT fk_idtur FOREIGN KEY (idtur) REFERENCES turma(idtur)
-	ADICIONAR PRIMARY KEY COMPOSTA EM IDALU E IDUR
-);
+	idtur int not null,
+	CONSTRAINT fk_idtur FOREIGN KEY (idtur) REFERENCES turma(idtur),
+	nota int not null,
+	PRIMARY KEY(idalu,idtur)
