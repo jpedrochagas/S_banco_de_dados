@@ -1,0 +1,61 @@
+/*   Criando tabela para bd campmoto  - João Pedro Chagas       */
+/* ============================================================ */
+
+CREATE SCHEMA campmoto;
+
+SET search_path TO campmoto;
+
+CREATE TABLE equipe(
+	idequ int not null CONSTRAINT idequ_pk PRIMARY KEY,
+	nomeequ varchar(50) not null CONSTRAINT nomeequ_sk UNIQUE,
+	paisequ varchar(50),
+	titulosequi varchar(70)
+);
+
+CREATE TABLE pessoa(
+	idpes int not null CONSTRAINT idpes_pk PRIMARY KEY,
+	nomepes varchar(50) not null,
+	tipopes char(1) CONSTRAINT tipopes_check CHECK (tipopes in ('P','M')),
+	idequ int not null,
+	CONSTRAINT idequ_fk FOREIGN KEY (idequ) REFERENCES equipe(idequ)	
+);
+
+CREATE TABLE piloto (
+	idpes int not null,
+	CONSTRAINT idpes_fk FOREIGN KEY (idpes) REFERENCES pessoa(idpes),
+	titulospes varchar(70),
+	pontuacao int,
+	PRIMARY KEY (idpes)
+);
+
+CREATE TABLE mecanico(
+	idpes int not null,
+	CONSTRAINT idpes_fk FOREIGN KEY (idpes) REFERENCES pessoa(idpes),
+	especialidademec int not null,
+	PRIMARY KEY (idpes)
+);
+
+CREATE TABLE circuito(
+	idcir int not null CONSTRAINT idcir_pk PRIMARY KEY,
+	nomecir varchar(50) CONSTRAINT nomecir_sk UNIQUE,
+	paiscir varchar(50) not null
+);
+
+CREATE TABLE corrida(
+	idcor int not null CONSTRAINT idcor_pk PRIMARY KEY,
+	idcir int not null,
+	CONSTRAINT idcir_fk FOREIGN KEY (idcir) REFERENCES circuito(idcir),
+	datacor DATE not null,
+	categoria varchar(50),
+	nvoltas int not null,
+	UNIQUE(datacor, idcir, categoria)
+);
+
+CREATE TABLE participacao(
+	idpes int not null,
+	CONSTRAINT idpes_fk FOREIGN KEY (idpes) REFERENCES pessoa(idpes),
+	idcor int not null,
+	CONSTRAINT idcor_fk FOREIGN KEY (idcor) REFERENCES corrida(idcor),
+	tempo TIME,
+	CONSTRAINT participacao_pk PRIMARY KEY (idpes, idcor)
+);
