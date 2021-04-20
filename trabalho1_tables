@@ -57,3 +57,23 @@ CREATE TABLE cliente(
 	cpf int not null, 
 	CONSTRAINT cpf_fk FOREIGN KEY (cpf) REFERENCES pessoa(cpf)
 );
+
+CREATE TABLE venda(
+	idvenda int not null CONSTRAINT idvenda_pk PRIMARY KEY,
+	idcliente int not null,
+	CONSTRAINT idcliente_fk FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
+	idfuncionario int not null,
+	CONSTRAINT idfuncionario_fk FOREIGN KEY (idfuncionario) REFERENCES funcionario(idfuncionario),
+	valor int not null,
+	datavenda DATE not null,
+	idremedio int not null,
+	CONSTRAINT idremedio_fk FOREIGN KEY (idremedio) REFERENCES remedio(idremedio)
+);
+
+CREATE TABLE entrega(
+	identrega int not null CONSTRAINT identrega_pk PRIMARY KEY,
+	identregador int not null,
+	CONSTRAINT identregador_fk FOREIGN KEY (identregador) REFERENCES entregador(identregador),
+	dataentrega DATE not null,
+	idvenda int not null
+);
