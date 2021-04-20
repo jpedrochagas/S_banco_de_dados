@@ -1,3 +1,4 @@
+CREATE SCHEMA farmacia;
 SET search_path TO farmacia;
 
 CREATE TABLE pessoa(
@@ -41,4 +42,18 @@ CREATE TABLE remedio(
 	idfornecimento int not null,
 	CONSTRAINT idfonecimento FOREIGN KEY (idfornecimento) REFERENCES fornecimento(idfornecimento),
 	tarja char(1) CONSTRAINT tarja_check CHECK (tarja in ('ST','TA','TV', 'TP'))
+);
+
+CREATE TABLE receita(
+		idreceita int,
+		idcliente int,
+		idvenda int,
+		nomeremedio varchar(50),
+		crm int
+);
+
+CREATE TABLE cliente(
+	idcliente int not null CONSTRAINT idcliente_pk PRIMARY KEY,
+	cpf int not null, 
+	CONSTRAINT cpf_fk FOREIGN KEY (cpf) REFERENCES pessoa(cpf)
 );
