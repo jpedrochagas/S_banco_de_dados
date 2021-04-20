@@ -70,6 +70,13 @@ CREATE TABLE venda(
 	CONSTRAINT idremedio_fk FOREIGN KEY (idremedio) REFERENCES remedio(idremedio)
 );
 
+CREATE TABLE entregador(
+	identregador int not null CONSTRAINT identregador_pk PRIMARY KEY,
+	cpf int not null,
+	CONSTRAINT cpf_fk FOREIGN KEY (cpf) REFERENCES pessoa(cpf),
+	valorentrega int not null
+);
+
 CREATE TABLE entrega(
 	identrega int not null CONSTRAINT identrega_pk PRIMARY KEY,
 	identregador int not null,
