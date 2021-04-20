@@ -1,0 +1,8 @@
+SET search_path TO farmacia;
+
+CREATE TABLE pessoa(
+	cpf int not null CONSTRAINT cpf_pk PRIMARY KEY,
+	nome varchar(50) not null,
+	genero char(1) CONSTRAINT genero_check CHECK (genero in ('M','F')), 
+	telefone int
+); 
