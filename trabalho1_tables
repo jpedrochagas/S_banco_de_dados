@@ -6,3 +6,39 @@ CREATE TABLE pessoa(
 	genero char(1) CONSTRAINT genero_check CHECK (genero in ('M','F')), 
 	telefone int
 ); 
+
+CREATE TABLE fornecedor(
+	idfornecedor int not null CONSTRAINT idfornecedor_pk PRIMARY KEY,
+	nome varchar(50) not null,
+	cnpj int not null CONSTRAINT cnpj_sk UNIQUE,
+	email varchar(25) CONSTRAINT email_sk UNIQUE
+);
+
+CREATE TABLE fornecimento(
+	idfornecimento int not null CONSTRAINT idfornecimento_pk PRIMARY KEY,
+	nomeremedio varchar(50) not null CONSTRAINT nomeremedio_sk UNIQUE,
+	datafornecimento DATE not null
+);
+
+CREATE TABLE funcionario(
+	idfuncionario int not null CONSTRAINT idfuncionario_pk PRIMARY KEY, 
+	salario int not null,
+	cpf int not null,
+	CONSTRAINT cpf_fk FOREIGN KEY (cpf) REFERENCES pessoa(cpf)
+);
+
+CREATE TABLE medico(
+	crm int not null CONSTRAINT crm_pk PRIMARY KEY,
+	cpf int not null,
+	CONSTRAINT cpf_fk FOREIGN KEY (cpf) REFERENCES pessoa(cpf)
+);
+
+CREATE TABLE remedio(
+	idremedio int not null CONSTRAINT remedio_pk PRIMARY KEY,
+	nomeremedio varchar(50) not null,
+	CONSTRAINT nomeremedio FOREIGN KEY (nomeremedio) REFERENCES fornecimento(nomeremedio),
+	preco int not null,
+	idfornecimento int not null,
+	CONSTRAINT idfonecimento FOREIGN KEY (idfornecimento) REFERENCES fornecimento(idfornecimento),
+	tarja char(1) CONSTRAINT tarja_check CHECK (tarja in ('ST','TA','TV', 'TP'))
+);
