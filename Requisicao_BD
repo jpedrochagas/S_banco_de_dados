@@ -1,0 +1,15 @@
+SET search_path TO SEC;
+
+SELECT * FROM PESSOA
+
+SELECT * FROM tarefa
+
+SELECT idPessoa, cpf, nomePessoa FROM pessoa WHERE tipopessoa='ES'
+
+SELECT idPessoa FROM tarefa WHERE idtarefa='1'
+
+SELECT idTarefa, descricaoTarefa FROM tarefa WHERE descricaotarefa LIKE '%Workshop%'
+
+SELECT pessoa.idpessoa, tarefa.idtarefa, pessoa.nomepessoa FROM pessoa INNER JOIN tarefa ON pessoa.idpessoa = tarefa.idpessoa 
+
+SELECT pessoa.nomepessoa, tarefa.descricaotarefa FROM pessoa INNER JOIN tarefa ON pessoa.idpessoa = tarefa.idpessoa WHERE descricaotarefa LIKE '%Sessao%'
