@@ -1,0 +1,76 @@
+SET search_path TO SEC;
+--1
+SELECT * 
+FROM PESSOA
+
+--2
+SELECT idPessoa, cpf, nomePessoa 
+FROM pessoa 
+WHERE tipopessoa='ES'
+
+--3
+SELECT idPessoa 
+FROM tarefa 
+WHERE idtarefa='1'
+
+--4
+SELECT idTarefa, descricaoTarefa 
+FROM tarefa 
+WHERE descricaotarefa 
+LIKE '%Workshop%'
+
+--5
+SELECT pessoa.idpessoa, tarefa.idtarefa, pessoa.nomepessoa 
+FROM pessoa 
+INNER JOIN tarefa 
+ON pessoa.idpessoa = tarefa.idpessoa 
+-------------------------outro método usando WHERE----------------------------------
+SELECT pessoa.idPessoa, tarefa.idTarefa, nomePessoa
+FROM pessoa, tarefa
+WHERE pessoa.idpessoa = tarefa.idpessoa
+
+--6
+SELECT pessoa.nomePessoa, tarefa.descricaoTarefa
+FROM pessoa
+INNER JOIN tarefa 
+ON pessoa.idpessoa = tarefa.idpessoa 
+-------------------------outro método usando WHERE-----------------------------------
+SELECT pessoa.nomepessoa, tarefa.descricaotarefa
+FROM pessoa, tarefa
+WHERE pessoa.idpessoa = tarefa.idpessoa
+
+--7
+SELECT pessoa.nomepessoa, tarefa.descricaotarefa 
+FROM pessoa 
+INNER JOIN tarefa 
+ON pessoa.idpessoa = tarefa.idpessoa 
+WHERE descricaotarefa LIKE '%Sessao%'
+-----------------------outro método usando WHERE------------------------------------
+SELECT pessoa.nomepessoa, tarefa.descricaotarefa
+FROM pessoa, tarefa
+WHERE tarefa.idpessoa = pessoa.idpessoa
+AND descricaotarefa LIKE '%Sessao%' 
+
+--8
+(SELECT 'Pessoa', pessoa.nomepessoa, servico.descricaoservico
+FROM pessoa,servico
+WHERE pessoa.idresponsavel = servico.idresponsavel)
+UNION
+(SELECT 'Empresa', empresa.nomeempresa, servico.descricaoservico
+FROM empresa,prestadora,servico
+WHERE prestadora.idresponsavel = servico.idresponsavel AND
+empresa.idempresa = prestadora.idempresa)
+
+--9
+INSERT INTO sec.empresa(cnpj, nomeEmpresa) VALUES ('34107357000195', 'GoBro produCoes');
+INSERT INTO sec.patrocinadora (idempresa,valorpatrocinio,estadoliberacao,dataliberacao) VALUES
+(6,15000.50,'P',null);
+
+--10
+DELETE FROM tarefa 
+WHERE idtarefa = 6
+
+--11
+UPDATE servico 
+SET custoservico = custoservico*1.25 
+WHERE estadoservico = 'P' OR estadoservico = 'C'
