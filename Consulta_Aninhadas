@@ -1,0 +1,61 @@
+SET search_path to sec;
+
+--1
+SELECT idservico, descricaoservico FROM servico 
+WHERE idservico IN 
+(SELECT idresponsavel FROM prestadora, empresa 
+WHERE prestadora.idempresa = empresa.idempresa AND
+empresa.nomeempresa LIKE '%MIDIA%')
+OR idservico IN
+(SELECT idresponsavel 
+ FROM pessoa, empresa
+ WHERE pessoa.idempresa = empresa.idempresa 
+ AND empresa.nomeempresa LIKE '%MIDIA')
+ 
+ --2
+ --a
+SELECT descricaoservico FROM servico AS s
+WHERE NOT EXISTS 
+(SELECT * FROM servico AS se WHERE s.custoservico < se.custoservico)
+--b
+SELECT descricaoservico FROM servico AS s
+WHERE custoservico > ALL 
+(
+	SELECT custoservico FROM servico AS se
+	WHERE s.idservico <> se.idservico	
+)
+-------------------invertendo a situação----------------------------
+--a
+SELECT descricaoservico FROM servico AS s
+WHERE NOT EXISTS 
+(SELECT * FROM servico AS se WHERE s.custoservico > se.custoservico)
+--b
+SELECT descricaoservico FROM servico AS s
+WHERE custoservico < ALL 
+(SELECT custoservico FROM servico AS se
+WHERE s.idservico <> se.idservico)
+
+--3 
+SELECT nomepessoa FROM pessoa 
+WHERE EXISTS
+(SELECT * FROM tarefa WHERE pessoa.idpessoa = tarefa.idpessoa)
+
+--4
+SELECT idtarefa, descricaotarefa FROM tarefa
+WHERE NOT EXISTS
+(SELECT * FROM inscricao WHERE tarefa.idtarefa = inscricao.idtarefa)
+
+--5
+SELECT nomeempresa FROM empresa AS emp
+WHERE EXISTS
+(SELECT * FROM prestadora AS prest, servico AS serv
+WHERE prest.idresponsavel = serv.idresponsavel AND
+prest.idempresa = emp.idempresa
+)
+AND EXISTS 
+(
+SELECT * FROM pessoa AS p, tarefa AS t
+	WHERE p.idpessoa = t.idpessoa
+)
+
+
