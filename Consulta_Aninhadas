@@ -58,4 +58,39 @@ SELECT * FROM pessoa AS p, tarefa AS t
 	WHERE p.idpessoa = t.idpessoa
 )
 
+--6
+SELECT nomePessoa FROM pessoa AS p
+WHERE NOT EXISTS
+(
+SELECT * FROM tarefa AS t
+WHERE NOT EXISTS
+(
+SELECT * FROM inscricao AS i
+WHERE i.idpessoa = p.idpessoa AND
+i.idtarefa = t.idtarefa
+)
+)
 
+--7
+SELECT nomePessoa FROM pessoa AS p
+WHERE EXISTS
+(
+SELECT * FROM servico AS s
+WHERE p.idresponsavel = s.idresponsavel
+)
+AND EXISTS
+(
+SELECT * FROM tarefa AS t, inscricao AS i
+WHERE p.idpessoa = i.idpessoa
+AND t.idtarefa = i.idtarefa
+)
+
+--8
+SELECT idServico, descricaoServico, custoServico, dataTerminoServico, nomePessoa,
+dataPagamentoInscricao FROM pessoa AS p, servico AS s
+WHERE EXISTS
+(
+SELECT * FROM inscricao AS i
+WHERE i.idpessoa = p.idpessoa
+)
+AND p.dataPagamentoInscricao > dataTerminoServico
