@@ -1,5 +1,4 @@
-SET search_path to sec;
-
+SET SEARCH_PATH TO SEC;
 --1
 SELECT idservico, descricaoservico FROM servico 
 WHERE idservico IN 
@@ -45,6 +44,11 @@ SELECT idtarefa, descricaotarefa FROM tarefa
 WHERE NOT EXISTS
 (SELECT * FROM inscricao WHERE tarefa.idtarefa = inscricao.idtarefa)
 
+
+-- Povoando o ex 4 para não dar tabela nula
+INSERT INTO TAREFA
+VALUES( DEFAULT, 'Povoar BD', 3, NULL)
+
 --5
 SELECT nomeempresa FROM empresa AS emp
 WHERE EXISTS
@@ -71,7 +75,7 @@ i.idtarefa = t.idtarefa
 )
 )
 
---7
+7--
 SELECT nomePessoa FROM pessoa AS p
 WHERE EXISTS
 (
@@ -85,7 +89,7 @@ WHERE p.idpessoa = i.idpessoa
 AND t.idtarefa = i.idtarefa
 )
 
---8
+8--
 SELECT idServico, descricaoServico, custoServico, dataTerminoServico, nomePessoa,
 dataPagamentoInscricao FROM pessoa AS p, servico AS s
 WHERE EXISTS
@@ -94,3 +98,11 @@ SELECT * FROM inscricao AS i
 WHERE i.idpessoa = p.idpessoa
 )
 AND p.dataPagamentoInscricao > dataTerminoServico
+
+-- realizando os inserts no ex8 para não deixar a tabela vazia
+INSERT INTO PESSOA
+VALUES(5,'34532423532','VICTOR BRITO', '2020-02-20', 'PR', 1, 1)
+
+INSERT INTO SERVICO
+VALUES(DEFAULT,'FOTOGRAFIA AÉREA', 350.00, 'P', '2018-01-15', 1)
+
