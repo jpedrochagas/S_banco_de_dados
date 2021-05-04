@@ -1,0 +1,56 @@
+--João Pedro Deltoso Chagas
+
+SET search_path TO sec;
+
+--1
+SELECT idpessoa, idtarefa, nomepessoa
+FROM pessoa NATURAL JOIN tarefa
+
+--2
+SELECT nomepessoa, descricaotarefa 
+FROM pessoa NATURAL JOIN tarefa
+
+-- Utilizando INNER JOIN
+
+SELECT pessoa.nomepessoa, tarefa.descricaotarefa 
+FROM pessoa 
+INNER JOIN tarefa
+ON pessoa.idpessoa = tarefa.idpessoa
+
+--3
+SELECT nomepessoa
+FROM pessoa
+WHERE (SELECT COUNT(*) 
+	  FROM tarefa
+	  WHERE pessoa.idpessoa = tarefa.idpessoa) > 1
+	  
+--4 
+SELECT nomepessoa
+FROM pessoa
+WHERE (SELECT COUNT(*) from servico
+	  WHERE pessoa.idresponsavel = servico.idresponsavel) > 0
+AND
+(SELECT COUNT(*) 
+	  FROM tarefa
+	  WHERE pessoa.idpessoa = tarefa.idpessoa) > 0
+	  
+--5
+SELECT nomepessoa, nomeempresa 
+FROM pessoa
+FULL OUTER JOIN empresa 
+ON pessoa.idempresa = empresa.idempresa
+
+--6
+SELECT 'Pessoa' AS responsavel, pessoa.nomepessoa, servico.descricaoservico 
+FROM servico 
+RIGHT OUTER JOIN pessoa 
+ON servico.idresponsavel = pessoa.idresponsavel
+UNION
+(SELECT 'Empresa' as responsavel, empresa.nomeempresa, servico.descricaoservico 
+FROM servico
+RIGHT OUTER JOIN  
+(empresa NATURAL JOIN prestadora)
+ON prestadora.idresponsavel = servico.idresponsavel 
+AND empresa.idempresa = prestadora.idempresa)
+
+--7
