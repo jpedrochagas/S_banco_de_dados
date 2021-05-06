@@ -54,3 +54,24 @@ ON prestadora.idresponsavel = servico.idresponsavel
 AND empresa.idempresa = prestadora.idempresa)
 
 --7
+SELECT DISTINCT tarefa.idtarefa, descricaotarefa, COUNT(tarefa.idtarefa) AS numeroinscritos 
+FROM tarefa
+INNER JOIN inscricao
+ON tarefa.idtarefa = inscricao.idtarefa
+GROUP BY tarefa.idtarefa
+HAVING COUNT(tarefa.idtarefa) >= 2;
+
+--8
+SELECT DISTINCT cpf, nomepessoa, COUNT(tarefa.idpessoa) AS numerodetarefas 
+FROM pessoa 
+NATURAL JOIN tarefa
+GROUP BY cpf, nomepessoa
+HAVING COUNT(tarefa.idpessoa) > 1
+
+--9
+SELECT cpf, nomepessoa, COUNT(*) as numerotarefa
+FROM pessoa
+NATURAL JOIN inscricao
+where NOT EXISTS(SELECT * FROM TAREFA WHERE tarefa.idpessoa = pessoa.idpessoa)
+GROUP BY 1,2
+HAVING COUNT(*) > 1
