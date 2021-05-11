@@ -1,0 +1,48 @@
+SET search_path to SEC;
+
+--8.1
+--a
+CREATE VIEW vpatrocinadora 
+AS SELECT nomeempresa, valorpatrocinio, dataliberacao
+FROM empresa as e,patrocinadora as p
+WHERE e.idempresa = p.idempresa
+--exibe o resultado da consulta da view criada
+SELECT * FROM vpatrocinadora
+
+--b
+CREATE VIEW vinscritotarefa
+AS SELECT nomepessoa, descricaotarefa
+FROM pessoa p, tarefa t
+WHERE p.idpessoa = t.idpessoa
+ORDER BY 1;
+--exibe o resultado da consulta da view criada
+SELECT * FROM vinscritotarefa
+
+--c
+CREATE VIEW vpatrocinioEvento
+AS (SELECT sum(valorpatrocinio) AS SOMA
+FROM patrocinadora);
+--exibe o resultado da consulta da view criada
+SELECT * FROM vpatrocinioEvento
+
+--d
+CREATE VIEW vservicoatrasado
+AS (SELECT s.descricaoservico, s.estadoservico, s.dataterminoservico, p.nomepessoa
+FROM servico s,responsavel r,pessoa p
+
+WHERE r.idresponsavel = p.idresponsavel AND
+s.idresponsavel = r.idresponsavel
+AND
+s.dataterminoservico IN
+(SELECT *
+FROM CURRENT_DATE
+WHERE s.dataterminoservico < date
+)
+AND (s.estadoservico = 'P' OR s.estadoservico = 'C')
+);
+
+--exibe o resultado da consulta da view criada
+SELECT * FROM vservicoatrasado
+--* o dia corrente pode ser obtido pela função CURRENT_DATE, por exemplo,
+com SELECT * FROM CURRENT_DATE.
+
